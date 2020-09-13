@@ -19,6 +19,8 @@ public class Game : MonoBehaviour
     private bool pause = true;
 
     private float platformDirection = -1f;
+
+    private Coroutine DoNothingEnding;
     
 
     void Start()
@@ -83,6 +85,9 @@ public class Game : MonoBehaviour
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
                 Ending(2, "You grew a forest!");
             }, 5f));
+
+            StopCoroutine(DoNothingEnding);
+            Debug.Log("DoNothingEnding coroutine has been cancelled.");
         };
 
         Button platformButton = transform.Find("island_2_platforms/platform_05/button").GetComponent<Button>();
@@ -155,7 +160,7 @@ public class Game : MonoBehaviour
     {
         pause = true;
         PlayerPause(true);
-        UI.EndingMenu(num, 3, text);
+        UI.EndingMenu(num, 4, text);
     }
 
     void Update()
@@ -165,6 +170,11 @@ public class Game : MonoBehaviour
             PlayerPause(pause);
             UI.PauseMenu(pause);
             UI.ReplaceMainMenuWithPauseMenu();
+            if (pause)
+            {
+                StopCoroutine(DoNothingEnding);
+                Debug.Log("DoNothingEnding coroutine has been cancelled.");
+            }       
         }
     }
 
@@ -176,6 +186,15 @@ public class Game : MonoBehaviour
     }
 
     public void StartGame()
+    {
+        ResumeGame();
+        Debug.Log("DoNothingEnding coroutine has started.");
+        DoNothingEnding = StartCoroutine(AnimationHelper.RunOnce(delegate() {
+            Ending(4, "Hello? Are you there?\nYou've been doing nothing for 10 mintes.");
+        }, 600f));
+    }
+
+    public void ResumeGame()
     {
         pause = false;
         PlayerPause(false);
@@ -194,6 +213,8 @@ public class Game : MonoBehaviour
         if (islandAwayTimes == 1) {
             transform.Find("island_1/button").gameObject.SetActive(true);
             transform.Find("island_2/island/island").GetComponent<Island>().enabled = true;
+            StopCoroutine(DoNothingEnding);
+            Debug.Log("DoNothingEnding coroutine has been cancelled.");
         }
         if (islandAwayTimes == 2) {
             transform.Find("island_2_platforms/platform_05/button").gameObject.SetActive(true);
