@@ -20,4 +20,6 @@ Ulanovsky, Sol Matas, Juan Pablo del Peral, Jacques Le Bailly
 
 - [Boat sound](https://freesound.org/people/devy32/sounds/441223/) by devy32
 
+- [Growing tree sound](https://freesound.org/people/Kinoton/sounds/494071/) by Kinoton
+
 - [UI click sound](https://freesound.org/people/Breviceps/sounds/448086/) by Breviceps

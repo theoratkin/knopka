@@ -55,12 +55,34 @@ public class Game : MonoBehaviour
         };
 
         transform.Find("island_1/tree/button").GetComponent<Button>().OnButtonPressEvent += delegate() {
-            if (islandAwayTimes == 0) {
-                Debug.Log("NO! You weren't supposed to do that yet! Congratulations, you broke the game. I hope you are happy. Now get out.");
-                return;
-            }
+            Transform island = transform.Find("island_1/island");
+            Transform forest = transform.Find("forest");
+            forest.gameObject.SetActive(true);
 
+            transform.Find("island_2").gameObject.SetActive(false);
+            transform.Find("island_2_platforms").gameObject.SetActive(false);
+            transform.Find("island_3").gameObject.SetActive(false);
+            transform.Find("island_3_platforms").gameObject.SetActive(false);
+            transform.Find("island_4").gameObject.SetActive(false);
+            transform.Find("island_4_platforms").gameObject.SetActive(false);
+            transform.Find("island_5").gameObject.SetActive(false);
 
+            List<Vector3> origScales = new List<Vector3>();
+            foreach (Transform tree in forest) {
+                    origScales.Add(tree.localScale);
+                }
+            StartCoroutine(AnimationHelper.RunAnimation(2f, delegate(float timePerc, float secondsPassed) {
+                int i = 0;
+                foreach (Transform tree in forest) {
+                    tree.localScale = origScales[i] * timePerc;
+                    ++i;
+                }
+                island.localScale = new Vector3(1f, 1f, 1f) + new Vector3(9f, 0f, 9f) * timePerc;
+            }, AnimationHelper.EaseOut, AnimationHelper.SineFunction));
+     
+            StartCoroutine(AnimationHelper.RunOnce(delegate() {
+                Ending(2, "You grew a forest!");
+            }, 5f));
         };
 
         Button platformButton = transform.Find("island_2_platforms/platform_05/button").GetComponent<Button>();
