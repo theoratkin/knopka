@@ -15,6 +15,7 @@ public class Button : MonoBehaviour
     private Animator animator;
 
     private new AudioSource audio;
+    
 
     void Start()
     {
@@ -46,6 +47,8 @@ public class Button : MonoBehaviour
         else {
             animator.Play("press_release");
         }
+
+        Game.game.OnButtonPress(this);
         
         OnButtonPressEvent?.Invoke();
     }
