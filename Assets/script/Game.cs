@@ -21,6 +21,10 @@ public class Game : MonoBehaviour
     private float platformDirection = -1f;
 
     private Coroutine DoNothingEnding;
+
+    private Button island2Button;
+    private Button treeButton;
+    private Button sunButton;
     
 
     void Start()
@@ -56,7 +60,8 @@ public class Game : MonoBehaviour
                 Move(platform, 1.5f, platforms.position.y * Vector3.down);
         };
 
-        transform.Find("island_1/tree/button").GetComponent<Button>().OnButtonPressEvent += delegate() {
+        treeButton = transform.Find("island_1/tree/button").GetComponent<Button>();
+        treeButton.OnButtonPressEvent += delegate() {
             Transform island = transform.Find("island_1/island");
             Transform forest = transform.Find("forest");
             forest.gameObject.SetActive(true);
@@ -141,14 +146,16 @@ public class Game : MonoBehaviour
                 Move(platform, 2f, platform.position.y * Vector3.down);
         };
 
-        transform.Find("island_2/button").GetComponent<Button>().OnButtonPressEvent += delegate() {
+        island2Button = transform.Find("island_2/button").GetComponent<Button>();
+        island2Button.OnButtonPressEvent += delegate() {
             transform.Find("island_2/boat_horn").GetComponent<AudioSource>().Play();
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
                 Ending(1, "I've wanted to do that all my life!");
             }, 3f));
         };
 
-        transform.Find("island_4/sun_button").GetComponent<Button>().OnButtonPressEvent += delegate() {
+        sunButton = transform.Find("island_4/sun_button").GetComponent<Button>();
+        sunButton.OnButtonPressEvent += delegate() {
             RenderSettings.skybox = Resources.Load<Material>("material/skybox_lit");
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
                 Ending(3, "Let there be light.");
@@ -160,7 +167,7 @@ public class Game : MonoBehaviour
     {
         pause = true;
         PlayerPause(true);
-        UI.EndingMenu(num, 4, text);
+        UI.EndingMenu(num, 5, text);
     }
 
     void Update()
@@ -192,6 +199,15 @@ public class Game : MonoBehaviour
         DoNothingEnding = StartCoroutine(AnimationHelper.RunOnce(delegate() {
             Ending(4, "Hello? Are you there?\nYou've been doing nothing for 10 mintes.");
         }, 600f));
+    }
+
+    public void OnButtonPress(Button button)
+    {
+        if (button != island2Button && button != treeButton && button != sunButton) {
+            if (Random.Range(0, 1001) == 0) {
+                Ending(5, "You are lucky.\nThere's a 1/1000 chance of getting this ending when pressing a button.");
+            }
+        }
     }
 
     public void ResumeGame()
