@@ -91,8 +91,7 @@ public class Game : MonoBehaviour
                 Ending(2, "You grew a forest!");
             }, 5f));
 
-            StopCoroutine(DoNothingEnding);
-            Debug.Log("DoNothingEnding coroutine has been cancelled.");
+            CancelDoNothingEnding();
         };
 
         Button platformButton = transform.Find("island_2_platforms/platform_05/button").GetComponent<Button>();
@@ -173,10 +172,7 @@ public class Game : MonoBehaviour
             UI.PauseMenu(pause);
             UI.ReplaceMainMenuWithPauseMenu();
             if (pause)
-            {
-                StopCoroutine(DoNothingEnding);
-                Debug.Log("DoNothingEnding coroutine has been cancelled.");
-            }       
+                CancelDoNothingEnding();
         }
     }
 
@@ -205,6 +201,15 @@ public class Game : MonoBehaviour
         }
     }
 
+    void CancelDoNothingEnding()
+    {
+        if (DoNothingEnding) {
+            StopCoroutine(DoNothingEnding);
+            Debug.Log("DoNothingEnding coroutine has been cancelled.");
+            DoNothingEnding = null;
+        }
+    }
+
     public void ResumeGame()
     {
         pause = false;
@@ -224,8 +229,7 @@ public class Game : MonoBehaviour
         if (islandAwayTimes == 1) {
             transform.Find("island_1/button").gameObject.SetActive(true);
             transform.Find("island_2/island/island").GetComponent<Island>().enabled = true;
-            StopCoroutine(DoNothingEnding);
-            Debug.Log("DoNothingEnding coroutine has been cancelled.");
+            CancelDoNothingEnding();
         }
         if (islandAwayTimes == 2) {
             transform.Find("island_2_platforms/platform_05/button").gameObject.SetActive(true);
