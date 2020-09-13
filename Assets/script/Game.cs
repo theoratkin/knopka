@@ -142,6 +142,13 @@ public class Game : MonoBehaviour
                 Ending(1, "What's that sound?");
             }, 3f));
         };
+
+        transform.Find("island_4/sun_button").GetComponent<Button>().OnButtonPressEvent += delegate() {
+            RenderSettings.skybox = Resources.Load<Material>("material/skybox_lit");
+            StartCoroutine(AnimationHelper.RunOnce(delegate() {
+                Ending(3, "Let there be light.");
+            }, 3f));
+        };
     }
 
     void Ending(int num, string text)
