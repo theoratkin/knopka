@@ -60,10 +60,7 @@ public class Game : MonoBehaviour
                 return;
             }
 
-            Transform platforms = transform.Find("island_2_platforms");
-            platforms.gameObject.SetActive(true);
-            foreach (Transform platform in platforms)
-                Move(platform, 2f, platform.position.y * Vector3.down);
+
         };
 
         Button platformButton = transform.Find("island_2_platforms/platform_05/button").GetComponent<Button>();
@@ -109,6 +106,12 @@ public class Game : MonoBehaviour
 
             transform.Find("platform_01").gameObject.SetActive(true);
             transform.Find("island_5").gameObject.SetActive(true);
+        };
+        transform.Find("island_5/button").GetComponent<Button>().OnButtonPressEvent += delegate() {
+            Transform platforms = transform.Find("island_2_platforms");
+            platforms.gameObject.SetActive(true);
+            foreach (Transform platform in platforms)
+                Move(platform, 2f, platform.position.y * Vector3.down);
         };
 
         transform.Find("island_2/button").GetComponent<Button>().OnButtonPressEvent += delegate() {
