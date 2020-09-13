@@ -12,6 +12,7 @@ public class UI : MonoBehaviour
     private Transform main;
     private Transform pause;
     private Transform settings;
+    private Transform ending;
     private AudioSource music;
     private AudioSource[] sfx;
 
@@ -24,6 +25,7 @@ public class UI : MonoBehaviour
         canvas = transform.Find("canvas");
         main = canvas.Find("main_menu");
         pause = canvas.Find("pause_menu");
+        ending = canvas.Find("ending");
 
         Game.UI = this;
         
@@ -34,10 +36,18 @@ public class UI : MonoBehaviour
         pause.Find("continue").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
             OnPlayClick();
         };
+        ending.Find("continue").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            OnPlayClick();
+            pause.gameObject.SetActive(true);
+            ending.gameObject.SetActive(false);  
+        };
         pause.Find("restart").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
-            SceneManager.UnloadSceneAsync("main");
-            SceneManager.LoadScene("main", LoadSceneMode.Additive);
-            gameObject.SetActive(false);
+            OnRestartClick();
+        };
+        ending.Find("restart").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            OnRestartClick();
+            pause.gameObject.SetActive(true);
+            ending.gameObject.SetActive(false);  
         };
         main.Find("settings").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
             OnSettingsClick();
@@ -55,6 +65,9 @@ public class UI : MonoBehaviour
             Application.Quit();
         };
         pause.Find("exit").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            Application.Quit();
+        };
+        ending.Find("exit").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
             Application.Quit();
         };
 
@@ -114,8 +127,18 @@ public class UI : MonoBehaviour
         fov = newFOV;
     }
 
+    public void EndingMenu(int num, int total, string text)
+    {
+        gameObject.SetActive(true);
+        pause.gameObject.SetActive(false);
+        ending.gameObject.SetActive(true);
+        ending.Find("text").GetComponent<Text>().text = string.Format("Ending {0} of {1}", num, total);
+        ending.Find("desc").GetComponent<Text>().text = text;
+    }
+
     public void PauseMenu(bool state)
     {
+        ending.gameObject.SetActive(false);
         gameObject.SetActive(state);
     }
 
@@ -136,6 +159,13 @@ public class UI : MonoBehaviour
     public void OnPlayClick()
     {
         Game.game.StartGame();
+        gameObject.SetActive(false);
+    }
+
+    public void OnRestartClick()
+    {
+        SceneManager.UnloadSceneAsync("main");
+        SceneManager.LoadScene("main", LoadSceneMode.Additive);
         gameObject.SetActive(false);
     }
 }
