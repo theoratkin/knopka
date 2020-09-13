@@ -190,6 +190,7 @@ public class Game : MonoBehaviour
         DoNothingEnding = StartCoroutine(AnimationHelper.RunOnce(delegate() {
             Ending(4, "Hello? Are you there?\nYou've been doing nothing for 10 mintes.");
         }, 600f));
+        RenderSettings.skybox = Resources.Load<Material>("material/skybox");
     }
 
     public void OnButtonPress(Button button)
