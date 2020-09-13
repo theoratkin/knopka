@@ -15,6 +15,9 @@ public class UIButton : MonoBehaviour
     public Color PressColor;
     public Color SelectColor;
 
+
+    AudioSource clickSound;
+
     public bool PopOut = false;
 
     Color normalColor;
@@ -24,6 +27,7 @@ public class UIButton : MonoBehaviour
     Image image;
 
     Vector2 normalSize;
+
 
     void Start()
     {
@@ -37,6 +41,8 @@ public class UIButton : MonoBehaviour
         normalColor = image.color;
 
         normalSize = rectt.sizeDelta;
+
+        clickSound = GameObject.Find("ui_click").GetComponent<AudioSource>();
     }
 
     void OnEnable()
@@ -74,6 +80,7 @@ public class UIButton : MonoBehaviour
 
     void OnMouseUpAsButton()
     {
+        clickSound.Play();
         OnButtonPressEvent?.Invoke();
     }
 }
