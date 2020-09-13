@@ -28,6 +28,7 @@ public class UIButton : MonoBehaviour
 
     Vector2 normalSize;
 
+    private bool initialized = false;
 
     void Start()
     {
@@ -43,12 +44,16 @@ public class UIButton : MonoBehaviour
         normalSize = rectt.sizeDelta;
 
         clickSound = GameObject.Find("ui_click").GetComponent<AudioSource>();
+
+        initialized = true;
     }
 
-    void OnEnable()
+    void OnDisable()
     {
-        if (rectt)
-            rectt.sizeDelta = normalSize;
+        if (!initialized)
+            return;
+        rectt.sizeDelta = normalSize;
+        image.color = normalColor;
     }
 
     void OnMouseEnter()
