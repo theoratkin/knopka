@@ -131,6 +131,7 @@ public class UI : MonoBehaviour
     {
         gameObject.SetActive(true);
         pause.gameObject.SetActive(false);
+        settings.gameObject.SetActive(false);
         canvas.Find("credits").gameObject.SetActive(false);
         ending.gameObject.SetActive(true);
         ending.Find("text").GetComponent<Text>().text = string.Format("Ending {0} of {1}", num, total);
