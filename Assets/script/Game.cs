@@ -203,7 +203,7 @@ public class Game : MonoBehaviour
 
     void CancelDoNothingEnding()
     {
-        if (DoNothingEnding) {
+        if (DoNothingEnding != null) {
             StopCoroutine(DoNothingEnding);
             Debug.Log("DoNothingEnding coroutine has been cancelled.");
             DoNothingEnding = null;
