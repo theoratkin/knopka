@@ -113,7 +113,17 @@ public class Game : MonoBehaviour
 
         transform.Find("island_2/button").GetComponent<Button>().OnButtonPressEvent += delegate() {
             transform.Find("island_2/boat_horn").GetComponent<AudioSource>().Play();
+            StartCoroutine(AnimationHelper.RunOnce(delegate() {
+                Ending(1, "What's that sound?");
+            }, 3f));
         };
+    }
+
+    void Ending(int num, string text)
+    {
+        pause = true;
+        PlayerPause(true);
+        UI.EndingMenu(num, 3, text);
     }
 
     void Update()
