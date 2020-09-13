@@ -1,0 +1,141 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class UI : MonoBehaviour
+{
+    public bool Vsync { get; private set; }
+
+    private Transform canvas;
+    private Transform main;
+    private Transform pause;
+    private Transform settings;
+    private AudioSource music;
+    private AudioSource[] sfx;
+
+    private float fov = 60f;
+    private float musicVolume = 50f;
+    private float sfxVolume = 100f;
+
+    void Start()
+    {
+        canvas = transform.Find("canvas");
+        main = canvas.Find("main_menu");
+        pause = canvas.Find("pause_menu");
+
+        Game.UI = this;
+        
+        main.Find("play").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            OnPlayClick();
+            ReplaceMainMenuWithPauseMenu();
+        };
+        pause.Find("continue").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            OnPlayClick();
+        };
+        pause.Find("restart").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            SceneManager.UnloadSceneAsync("main");
+            SceneManager.LoadScene("main", LoadSceneMode.Additive);
+            gameObject.SetActive(false);
+        };
+        main.Find("settings").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            OnSettingsClick();
+        };
+        pause.Find("settings").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            OnSettingsClick();
+        };
+        main.Find("credits").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            OnCreditsClick();
+        };
+        pause.Find("credits").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            OnCreditsClick();
+        };
+        main.Find("exit").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            Application.Quit();
+        };
+        pause.Find("exit").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            Application.Quit();
+        };
+
+        settings = canvas.Find("settings");
+        settings.Find("vsync").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            Vsync = !Vsync;
+            settings.Find("vsync/text").GetComponent<Text>().text = Vsync ? "ON" : "OFF";
+            QualitySettings.vSyncCount = Vsync ? 1 : 0;
+        };
+
+        Slider fovSlider = settings.Find("fov").GetComponent<Slider>();
+        fovSlider.onValueChanged.AddListener(SetFOV);
+       
+        music = GameObject.Find("music").GetComponent<AudioSource>();
+        UpdateSettings();
+
+        Slider musicSlider = settings.Find("music").GetComponent<Slider>();
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        
+        Slider sfxSlider = settings.Find("sfx").GetComponent<Slider>();
+        sfxSlider.onValueChanged.AddListener(SetSfxVolume);
+    }
+
+    public void ReplaceMainMenuWithPauseMenu()
+    {
+        main.gameObject.SetActive(false);
+        pause.gameObject.SetActive(true);
+    }
+
+    public void UpdateSettings()
+    {
+        sfx = Game.game.gameObject.GetComponentsInChildren<AudioSource>(true);
+        
+        SetSfxVolume(sfxVolume);
+        SetFOV(fov);
+    }
+
+    void SetMusicVolume(float newVolume)
+    {
+        music.volume = newVolume / 100f;
+        settings.Find("music_val").GetComponent<Text>().text = ((int)newVolume).ToString();
+        musicVolume = newVolume;
+    }
+
+    void SetSfxVolume(float newVolume)
+    {
+        foreach (AudioSource sound in sfx)
+            sound.volume = newVolume / 100f;
+        settings.Find("sfx_val").GetComponent<Text>().text = ((int)newVolume).ToString();
+        sfxVolume = newVolume;
+    }
+
+    void SetFOV(float newFOV)
+    {
+        Game.game.player.Controller.SetFOV(newFOV);
+        settings.Find("fov_val").GetComponent<Text>().text = ((int)newFOV).ToString();
+        fov = newFOV;
+    }
+
+    public void PauseMenu(bool state)
+    {
+        gameObject.SetActive(state);
+    }
+
+    void OnSettingsClick()
+    {
+        canvas.Find("credits").gameObject.SetActive(false);
+        GameObject s = canvas.Find("settings").gameObject;
+        s.SetActive(!s.activeSelf);
+    }
+
+    void OnCreditsClick()
+    {
+        canvas.Find("settings").gameObject.SetActive(false);
+        GameObject cr = canvas.Find("credits").gameObject;
+        cr.SetActive(!cr.activeSelf);
+    }
+
+    public void OnPlayClick()
+    {
+        Game.game.StartGame();
+        gameObject.SetActive(false);
+    }
+}
