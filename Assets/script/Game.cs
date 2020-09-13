@@ -102,10 +102,6 @@ public class Game : MonoBehaviour
                 MoveIslandAway();
             }
             else {
-                //Animator anim = transform.Find("island_2_platforms/platform_05").GetComponent<Animator>();
-                //anim.enabled = true;
-                //anim.GetComponent<Animator>().Play("move");
-
                 if (platformDirection < 0f)
                     player.Checkpoint = transform.Find("island_2/checkpoint");
                 else
@@ -113,7 +109,6 @@ public class Game : MonoBehaviour
 
                 Transform platform = transform.Find("island_2_platforms/platform_05");
                 Move(platform, 1f, Vector3.forward * 303.2f * platformDirection);
-                platform.GetComponent<AudioSource>().enabled = true;
                 platform.GetComponent<AudioSource>().Play();
                 platformDirection = -platformDirection;
             }

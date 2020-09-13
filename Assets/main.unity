@@ -2532,7 +2532,6 @@ GameObject:
   - component: {fileID: 779626952}
   - component: {fileID: 779626955}
   - component: {fileID: 779626954}
-  - component: {fileID: 779626953}
   - component: {fileID: 779626956}
   m_Layer: 0
   m_Name: platform_05
@@ -2557,25 +2556,6 @@ Transform:
   m_Father: {fileID: 1099598977}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &779626953
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 779626951}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9afb387d5efc94aa2899f325720bf7f4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &779626954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2609,7 +2589,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779626951}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 63bd8c49209f86d379eab648b5a9257e, type: 3}
