@@ -34,10 +34,10 @@ public class UI : MonoBehaviour
             ReplaceMainMenuWithPauseMenu();
         };
         pause.Find("continue").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
-            OnPlayClick();
+            OnContinueClick();
         };
         ending.Find("continue").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
-            OnPlayClick();
+            OnContinueClick();
             pause.gameObject.SetActive(true);
             ending.gameObject.SetActive(false);  
         };
@@ -160,6 +160,12 @@ public class UI : MonoBehaviour
     public void OnPlayClick()
     {
         Game.game.StartGame();
+        gameObject.SetActive(false);
+    }
+
+    public void OnContinueClick()
+    {
+        Game.game.ResumeGame();
         gameObject.SetActive(false);
     }
 
