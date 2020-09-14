@@ -145,7 +145,7 @@ public class Game : MonoBehaviour
         island2Button.OnButtonPressEvent += delegate() {
             transform.Find("island_2/boat_horn").GetComponent<AudioSource>().Play();
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
-                Ending(1, "I've wanted to do that all my life!");
+                Ending(1, "What was that?");
             }, 3f));
         };
 
