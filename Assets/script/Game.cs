@@ -146,7 +146,7 @@ public class Game : MonoBehaviour
         island2Button.OnButtonPressEvent += delegate() {
             transform.Find("island_2/boat_horn").GetComponent<AudioSource>().Play();
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
-                Ending(1, "A farewell? Or a new beginning?\nThat, or just a boat.");
+                Ending(1, "Farewell? Or a new beginning?\nThat, or just a boat.");
             }, 3f));
         };
 
