@@ -16,6 +16,7 @@ public class UI : MonoBehaviour
     private AudioSource music;
     private AudioSource[] sfx;
 
+    private bool fullscreen = true;
     private float fov = 60f;
     private float musicVolume = 50f;
     private float sfxVolume = 100f;
@@ -72,6 +73,12 @@ public class UI : MonoBehaviour
         };
 
         settings = canvas.Find("settings");
+        settings.Find("fullscreen").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            fullscreen = !fullscreen;
+            settings.Find("fullscreen/text").GetComponent<Text>().text = fullscreen ? "ON" : "OFF";
+            //Screen.fullScreenMode = fullscreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+            Screen.fullScreen = fullscreen;
+        };
         settings.Find("vsync").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
             Vsync = !Vsync;
             settings.Find("vsync/text").GetComponent<Text>().text = Vsync ? "ON" : "OFF";
