@@ -18,6 +18,7 @@ public class UI : MonoBehaviour
     private AudioSource[] sfx;
 
     private float fov = 60f;
+    private float sensitivity = 6f;
     private float musicVolume = 50f;
     private float sfxVolume = 100f;
     private int antiAliasing = 3;
@@ -117,10 +118,7 @@ public class UI : MonoBehaviour
         fovSlider.onValueChanged.AddListener(SetFOV);
 
         Slider sensSlider = settings.Find("sensitivity").GetComponent<Slider>();
-        sensSlider.onValueChanged.AddListener(delegate(float newVal) {
-            Game.game.player.Controller.mouseSensitivity = newVal;
-            settings.Find("sensitivity_val").GetComponent<Text>().text = newVal.ToString("0.0");
-        });
+        sensSlider.onValueChanged.AddListener(SetSensitivity);
        
         music = GameObject.Find("music").GetComponent<AudioSource>();
         UpdateSettings();
@@ -144,6 +142,7 @@ public class UI : MonoBehaviour
         
         SetSfxVolume(sfxVolume);
         SetFOV(fov);
+        SetSensitivity(sensitivity);
     }
 
     void SetFullscreen(bool state)
@@ -172,6 +171,13 @@ public class UI : MonoBehaviour
         Game.game.player.Controller.SetFOV(newFOV);
         settings.Find("fov_val").GetComponent<Text>().text = ((int)newFOV).ToString();
         fov = newFOV;
+    }
+
+    void SetSensitivity(float newVal)
+    {
+        Game.game.player.Controller.mouseSensitivity = newVal;
+        settings.Find("sensitivity_val").GetComponent<Text>().text = newVal.ToString("0.0");
+        sensitivity = newVal;
     }
 
     public void EndingMenu(int num, int total, string text)
