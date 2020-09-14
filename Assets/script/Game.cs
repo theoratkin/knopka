@@ -88,7 +88,7 @@ public class Game : MonoBehaviour
             }, AnimationHelper.EaseOut, AnimationHelper.SineFunction));
      
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
-                Ending(2, "You grew a forest!");
+                Ending(2, "Like a forest, friendship doesn't grow in a day.\nBut not this forest.");
             }, 5f));
 
             CancelDoNothingEnding();
@@ -145,7 +145,7 @@ public class Game : MonoBehaviour
         island2Button.OnButtonPressEvent += delegate() {
             transform.Find("island_2/boat_horn").GetComponent<AudioSource>().Play();
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
-                Ending(1, "What was that?");
+                Ending(1, "A farewell? Or a new beginning?\nThat, or just a boat.");
             }, 3f));
         };
 
@@ -153,7 +153,7 @@ public class Game : MonoBehaviour
         sunButton.OnButtonPressEvent += delegate() {
             RenderSettings.skybox = Resources.Load<Material>("material/skybox_lit");
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
-                Ending(3, "Let there be light.");
+                Ending(3, "There was no light. And then it was.");
             }, 3f));
         };
     }
@@ -198,7 +198,7 @@ public class Game : MonoBehaviour
     {
         if (button != island2Button && button != treeButton && button != sunButton) {
             if (Random.Range(0, 1001) == 0) {
-                Ending(5, "You are lucky.\nThere's a 1/1000 chance of getting this ending when pressing a button.");
+                Ending(5, "You got lucky.\nThere's a 1/1000 chance of getting this ending when pressing a button.");
             }
         }
     }
