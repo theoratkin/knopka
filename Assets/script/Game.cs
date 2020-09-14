@@ -147,7 +147,7 @@ public class Game : MonoBehaviour
             transform.Find("island_2/boat_horn").GetComponent<AudioSource>().Play();
             StartCoroutine(AnimationHelper.RunOnce(delegate() {
                 Ending(1, "Farewell? Or a new beginning?\nThat, or just a boat.");
-            }, 3f));
+            }, 4f));
         };
 
         sunButton = transform.Find("island_4/sun_button").GetComponent<Button>();
