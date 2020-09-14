@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 
 public class UI : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class UI : MonoBehaviour
     private float fov = 60f;
     private float musicVolume = 50f;
     private float sfxVolume = 100f;
+    private int antiAliasing = 3;
 
     void Start()
     {
@@ -75,6 +77,35 @@ public class UI : MonoBehaviour
         SetFullscreen(Screen.fullScreen);
         settings.Find("fullscreen").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
             SetFullscreen(!Screen.fullScreen);
+        };
+        settings.Find("antialiasing").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
+            ++antiAliasing;
+            if (antiAliasing > 3)
+                antiAliasing = 0;
+            var postProcessing = Game.game.player.camera.GetComponent<PostProcessLayer>();
+            
+            string text = "";
+            switch(antiAliasing) {
+                case (0):
+                    postProcessing.antialiasingMode = PostProcessLayer.Antialiasing.None;
+                    text = "None";
+                    break;
+                case (1):
+                    postProcessing.antialiasingMode = PostProcessLayer.Antialiasing.SubpixelMorphologicalAntialiasing;
+                    postProcessing.subpixelMorphologicalAntialiasing.quality = SubpixelMorphologicalAntialiasing.Quality.Low;
+                    text = "Low";
+                    break;
+                case (2):
+                    postProcessing.subpixelMorphologicalAntialiasing.quality = SubpixelMorphologicalAntialiasing.Quality.Medium;
+                    text = "Medium";
+                    break;
+                case (3):
+                    postProcessing.subpixelMorphologicalAntialiasing.quality = SubpixelMorphologicalAntialiasing.Quality.High;
+                    text = "High";
+                    break;
+            }
+            
+            settings.Find("antialiasing/text").GetComponent<Text>().text = text;
         };
         settings.Find("vsync").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
             Vsync = !Vsync;
