@@ -132,6 +132,7 @@ public class Game : MonoBehaviour
 
             transform.Find("platform_01").gameObject.SetActive(true);
             transform.Find("island_5").gameObject.SetActive(true);
+            island.GetComponent<AudioSource>().Play();
         };
         transform.Find("island_5/button").GetComponent<Button>().OnButtonPressEvent += delegate() {
             Transform platforms = transform.Find("island_2_platforms");
