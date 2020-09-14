@@ -66,6 +66,7 @@ public class Game : MonoBehaviour
             Transform forest = transform.Find("forest");
             forest.gameObject.SetActive(true);
 
+            transform.Find("island_1/button").gameObject.SetActive(false);
             transform.Find("island_2").gameObject.SetActive(false);
             transform.Find("island_2_platforms").gameObject.SetActive(false);
             transform.Find("island_3").gameObject.SetActive(false);
