@@ -115,6 +115,12 @@ public class UI : MonoBehaviour
 
         Slider fovSlider = settings.Find("fov").GetComponent<Slider>();
         fovSlider.onValueChanged.AddListener(SetFOV);
+
+        Slider sensSlider = settings.Find("sensitivity").GetComponent<Slider>();
+        sensSlider.onValueChanged.AddListener(delegate(float newVal) {
+            Game.game.player.Controller.mouseSensitivity = newVal;
+            settings.Find("sensitivity_val").GetComponent<Text>().text = newVal.ToString("0.0");
+        });
        
         music = GameObject.Find("music").GetComponent<AudioSource>();
         UpdateSettings();
