@@ -16,7 +16,6 @@ public class UI : MonoBehaviour
     private AudioSource music;
     private AudioSource[] sfx;
 
-    private bool fullscreen = true;
     private float fov = 60f;
     private float musicVolume = 50f;
     private float sfxVolume = 100f;
@@ -73,11 +72,9 @@ public class UI : MonoBehaviour
         };
 
         settings = canvas.Find("settings");
+        SetFullscreen(Screen.fullScreen);
         settings.Find("fullscreen").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
-            fullscreen = !fullscreen;
-            settings.Find("fullscreen/text").GetComponent<Text>().text = fullscreen ? "ON" : "OFF";
-            //Screen.fullScreenMode = fullscreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-            Screen.fullScreen = fullscreen;
+            SetFullscreen(!Screen.fullScreen);
         };
         settings.Find("vsync").GetComponent<UIButton>().OnButtonPressEvent += delegate() {
             Vsync = !Vsync;
@@ -110,6 +107,12 @@ public class UI : MonoBehaviour
         
         SetSfxVolume(sfxVolume);
         SetFOV(fov);
+    }
+
+    void SetFullscreen(bool state)
+    {
+        Screen.fullScreen = state;
+        settings.Find("fullscreen/text").GetComponent<Text>().text = state ? "ON" : "OFF";
     }
 
     void SetMusicVolume(float newVolume)
