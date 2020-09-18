@@ -31,24 +31,15 @@ public class FirstPerson : MonoBehaviour
 
     private CharacterController controller;
 
-    private float verticalVelocity;
-    private float currentJumpForce = 0f;
-    private float currentGravity = 0f;
+    private Vector3 moveDirection;
 
-    private bool isGroundedPrev;
     private bool jumpStartedPrev;
-    private bool jumped = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         SetActive(true);
 
         controller = GetComponent<CharacterController>();
-
-        verticalVelocity = -Gravity;
-        isGroundedPrev = controller.isGrounded;
-        jumpStartedPrev = JumpAction.action.phase == InputActionPhase.Started;
     }
 
     public void SetActive(bool state)
@@ -69,18 +60,52 @@ public class FirstPerson : MonoBehaviour
         Cursor.lockState = state ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
-    private void FixedUpdate()
-    {
-        CalculateVerticalVelocity();
-
-        OnMove();
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        OnMove();
         OnLook();
     }
+
+
+    #region Movement
+
+    void OnMove()
+    {
+        Vector2 delta = MoveAction.action.ReadValue<Vector2>() * MovementSpeed;
+        float moveDirectionY = moveDirection.y;
+        moveDirection = Head.transform.forward * delta.y + Head.transform.right * delta.x;
+
+        if (Jumped() && controller.isGrounded)
+            moveDirection.y = JumpForce;
+        else
+            moveDirection.y = moveDirectionY;
+
+        if (!controller.isGrounded)
+            moveDirection.y -= Gravity * Time.deltaTime;
+
+        if (SkipMove)
+        {
+            SkipMove = false;
+            return;
+        }
+
+        controller.Move(moveDirection * Time.deltaTime);
+    }
+
+    private bool Jumped()
+    {
+        bool started = JumpAction.action.phase == InputActionPhase.Started;
+        // Jump.
+        if (started && !jumpStartedPrev)
+        {
+            jumpStartedPrev = started;
+            return true;
+        }
+        jumpStartedPrev = started;
+        return false;
+    }
+
+    #endregion
 
 
     #region Looking
@@ -107,64 +132,6 @@ public class FirstPerson : MonoBehaviour
 
     #endregion
 
-
-    #region Movement
-
-    void OnMove()
-    {
-        if (SkipMove)
-        {
-            SkipMove = false;
-            return;
-        }
-        Vector2 delta = MoveAction.action.ReadValue<Vector2>() * MovementSpeed;
-        Vector3 direction = Head.transform.forward * delta.y + Head.transform.right * delta.x;
-        direction.y = verticalVelocity;
-        controller.Move(direction * Time.deltaTime);
-    }
-
-    #endregion
-
-
-    #region Vertical Speed
-
-    void CalculateVerticalVelocity()
-    {
-        // Jump.
-        if (JumpAction.action.phase == InputActionPhase.Started && !jumpStartedPrev)
-        {
-            if (controller.isGrounded)
-            {
-                currentJumpForce = JumpForce;
-                jumped = true;
-            }
-        }
-        jumpStartedPrev = JumpAction.action.phase == InputActionPhase.Started;
-
-        // Losing ground.
-        if (!controller.isGrounded && isGroundedPrev)
-        {
-            if (!jumped)
-                currentGravity = 0f;
-        }
-        // Gaining ground.
-        if (controller.isGrounded && !isGroundedPrev)
-        {
-            jumped = false;
-            currentGravity = Gravity;
-        }
-        isGroundedPrev = controller.isGrounded;
-
-        if (currentJumpForce > 0f)
-            currentJumpForce -= .01f * Mass;
-
-        if (!controller.isGrounded && currentGravity < Gravity)
-            currentGravity += .01f * Mass;
-
-        verticalVelocity = -currentGravity + currentJumpForce;
-    }
-
-    #endregion
 
     public void SetCrosshairActive(bool state)
     {
