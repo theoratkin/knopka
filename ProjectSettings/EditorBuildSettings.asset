@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ui.unity
     guid: 0a5f1c36bf6d3211495913cbaf08c1ab
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 8c5d879d76f3a144181bc145a23476a3,
+      type: 2}
