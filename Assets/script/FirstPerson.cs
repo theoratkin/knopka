@@ -12,6 +12,7 @@ public class FirstPerson : MonoBehaviour
 
     public Transform Head;
     public Camera Camera;
+    public GameObject crosshair;
 
     [Range(1f, 100f)]
     public float MovementSpeed = .5f;
@@ -164,4 +165,9 @@ public class FirstPerson : MonoBehaviour
     }
 
     #endregion
+
+    public void SetCrosshairActive(bool state)
+    {
+        crosshair.SetActive(state);
+    }
 }
