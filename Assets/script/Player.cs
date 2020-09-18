@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //crosshair = transform.Find("HeadJoint/Player Camera/AutoCrosshair/Crosshair").gameObject;
         Controller = GetComponent<FirstPerson>();
         camera = Controller.Camera;
 
@@ -36,7 +35,7 @@ public class Player : MonoBehaviour
 
     public void SetCrosshairActive(bool state)
     {
-        //crosshair.gameObject.SetActive(state);
+        Controller.SetCrosshairActive(state);
     }
 
     void ResetPosition()

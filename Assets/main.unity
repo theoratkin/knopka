@@ -6426,26 +6426,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 319349086}
     m_Modifications:
-    - target: {fileID: 141405918832942516, guid: d36f687c7c94ed34aa10a1e99b7ae554,
-        type: 3}
-      propertyPath: JumpForce
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 141405918832942516, guid: d36f687c7c94ed34aa10a1e99b7ae554,
-        type: 3}
-      propertyPath: MovementSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 141405918832942516, guid: d36f687c7c94ed34aa10a1e99b7ae554,
-        type: 3}
-      propertyPath: MouseSensitivity
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 141405918832942516, guid: d36f687c7c94ed34aa10a1e99b7ae554,
-        type: 3}
-      propertyPath: Mass
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 141405918832942518, guid: d36f687c7c94ed34aa10a1e99b7ae554,
         type: 3}
       propertyPath: m_Name
@@ -6531,10 +6511,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 141405920059175544, guid: d36f687c7c94ed34aa10a1e99b7ae554,
+    - target: {fileID: 4390897906622270318, guid: d36f687c7c94ed34aa10a1e99b7ae554,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d36f687c7c94ed34aa10a1e99b7ae554, type: 3}
