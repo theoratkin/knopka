@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     public delegate void OnPlayerDeath();
 
     public event OnPlayerDeath OnPlayerDeathEvent;
+
+    public InputActionReference UseAction;
 
     public float FallingY = -100f;
 
@@ -16,27 +19,31 @@ public class Player : MonoBehaviour
 
     public new Camera camera { get; private set; }
 
-    public FirstPersonAIO Controller { get; private set; }
+    public FirstPerson Controller { get; private set; }
 
     public Transform Checkpoint { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        crosshair = transform.Find("HeadJoint/Player Camera/AutoCrosshair/Crosshair").gameObject;
-        camera = transform.Find("HeadJoint/Player Camera").GetComponent<Camera>();
-        Controller = GetComponent<FirstPersonAIO>();
+        //crosshair = transform.Find("HeadJoint/Player Camera/AutoCrosshair/Crosshair").gameObject;
+        Controller = GetComponent<FirstPerson>();
+        camera = Controller.Camera;
+
+        UseAction.action.started += OnUse;
+        UseAction.action.Enable();
     }
 
     public void SetCrosshairActive(bool state)
     {
-        crosshair.gameObject.SetActive(state);
+        //crosshair.gameObject.SetActive(state);
     }
 
     void ResetPosition()
     {
-        Controller.RotateCamera((Vector2)Checkpoint.eulerAngles + new Vector2(0f, -180f), false);
+        Controller.RotateCamera((Vector2)Checkpoint.eulerAngles);
         transform.position = Checkpoint.position;
+        Controller.SkipMove = true;
     }
 
     // Update is called once per frame
@@ -47,16 +54,17 @@ public class Player : MonoBehaviour
             OnPlayerDeathEvent?.Invoke();
             ResetPosition();
         }
+    }
 
-        if (Input.GetMouseButtonDown(0))
+    private void OnUse(InputAction.CallbackContext obj)
+    {
+        Button button = GetButton();
+        if (button)
         {
-            Button button = GetButton();
-            if (button)
-            {
-                button.Press();
-            }
+            button.Press();
         }
     }
+
 
     Button GetButton()
     {

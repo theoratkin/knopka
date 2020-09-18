@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
     public Player player { get; private set; }
+
+    public InputActionReference PauseAction;
+
     IslandAwayTrigger islandAway;
 
     int islandAwayTimes = 0;
@@ -30,6 +34,9 @@ public class Game : MonoBehaviour
     void Start()
     {
         game = this;
+
+        PauseAction.action.started += OnPause;
+        PauseAction.action.Enable();
 
         player = transform.Find("player").GetComponent<Player>();
         islandAway = transform.Find("island_2/island_away_trigger").GetComponent<IslandAwayTrigger>();
@@ -166,21 +173,20 @@ public class Game : MonoBehaviour
         UI.EndingMenu(num, 5, text);
     }
 
-    void Update()
+    private void OnPause(InputAction.CallbackContext obj)
     {
-        if(Input.GetButtonDown("Cancel")) {
-            pause = !pause;
-            PlayerPause(pause);
-            UI.PauseMenu(pause);
-            UI.ReplaceMainMenuWithPauseMenu();
-            if (pause)
-                CancelDoNothingEnding();
-        }
+        pause = !pause;
+        PlayerPause(pause);
+        UI.PauseMenu(pause);
+        UI.ReplaceMainMenuWithPauseMenu();
+        if (pause)
+            CancelDoNothingEnding();
     }
+
 
     void PlayerPause(bool state)
     {
-        player.Controller.ControllerPause(state);
+        player.Controller.SetActive(!state);
         player.SetCrosshairActive(!state);
         //player.GetComponent<Rigidbody>().isKinematic = state;
     }
@@ -231,7 +237,7 @@ public class Game : MonoBehaviour
 
         if (islandAwayTimes == 1) {
             transform.Find("island_1/button").gameObject.SetActive(true);
-            transform.Find("island_2/island/island").GetComponent<Island>().enabled = true;
+            transform.Find("island_2/checkpoint_zone").gameObject.SetActive(true);
             CancelDoNothingEnding();
         }
         if (islandAwayTimes == 2) {

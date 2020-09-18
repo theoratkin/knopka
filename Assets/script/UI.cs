@@ -18,7 +18,7 @@ public class UI : MonoBehaviour
     private AudioSource[] sfx;
 
     private float fov = 60f;
-    private float sensitivity = 6f;
+    private float sensitivity = 3f;
     private float musicVolume = 50f;
     private float sfxVolume = 100f;
     private int antiAliasing = 3;
@@ -121,7 +121,8 @@ public class UI : MonoBehaviour
         sensSlider.onValueChanged.AddListener(SetSensitivity);
        
         music = GameObject.Find("music").GetComponent<AudioSource>();
-        UpdateSettings();
+        if (Game.game)
+            UpdateSettings();
 
         Slider musicSlider = settings.Find("music").GetComponent<Slider>();
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
@@ -168,14 +169,14 @@ public class UI : MonoBehaviour
 
     void SetFOV(float newFOV)
     {
-        Game.game.player.Controller.SetFOV(newFOV);
+        Game.game.player.Controller.Camera.fieldOfView = newFOV;
         settings.Find("fov_val").GetComponent<Text>().text = ((int)newFOV).ToString();
         fov = newFOV;
     }
 
     void SetSensitivity(float newVal)
     {
-        Game.game.player.Controller.mouseSensitivity = newVal;
+        Game.game.player.Controller.MouseSensitivity = newVal;
         settings.Find("sensitivity_val").GetComponent<Text>().text = newVal.ToString("0.0");
         sensitivity = newVal;
     }
