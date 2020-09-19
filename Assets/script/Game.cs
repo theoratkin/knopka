@@ -196,6 +196,10 @@ public class Game : MonoBehaviour
     {
         player.Controller.Active = !state;
         player.Controller.CrosshairActive = !state;
+        if (state)
+            player.UseAction.action.Disable();
+        else
+            player.UseAction.action.Enable();
         //player.GetComponent<Rigidbody>().isKinematic = state;
     }
 
