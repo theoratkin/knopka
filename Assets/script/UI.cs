@@ -126,14 +126,15 @@ public class UI : MonoBehaviour
         sensSlider.onValueChanged.AddListener(SetSensitivity);
        
         music = GameObject.Find("music").GetComponent<AudioSource>();
-        if (Game.game)
-            UpdateSettings();
 
         Slider musicSlider = settings.Find("music").GetComponent<Slider>();
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         
         Slider sfxSlider = settings.Find("sfx").GetComponent<Slider>();
         sfxSlider.onValueChanged.AddListener(SetSfxVolume);
+
+        if (Game.game)
+            UpdateSettings();
     }
 
     public void ReplaceMainMenuWithPauseMenu()
