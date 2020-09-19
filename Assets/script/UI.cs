@@ -7,6 +7,9 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class UI : MonoBehaviour
 {
+    private const float DefaultSensitivity = 3f;
+    private const float DefaultWebSensitivity = 2f;
+
     public bool Vsync { get; private set; }
 
     private Transform canvas;
@@ -18,7 +21,7 @@ public class UI : MonoBehaviour
     private AudioSource[] sfx;
 
     private float fov = 60f;
-    private float sensitivity = 3f;
+    private float sensitivity = DefaultSensitivity;
     private float musicVolume = 50f;
     private float sfxVolume = 100f;
     private int antiAliasing = 3;
@@ -117,6 +120,8 @@ public class UI : MonoBehaviour
         Slider fovSlider = settings.Find("fov").GetComponent<Slider>();
         fovSlider.onValueChanged.AddListener(SetFOV);
 
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            sensitivity = DefaultWebSensitivity;
         Slider sensSlider = settings.Find("sensitivity").GetComponent<Slider>();
         sensSlider.onValueChanged.AddListener(SetSensitivity);
        
