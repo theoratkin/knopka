@@ -141,7 +141,7 @@ public class FirstPerson : MonoBehaviour
         bool grounded = controller.isGrounded && !isGroundedPrev;
         isGroundedPrev = controller.isGrounded;
 
-        if (grounded && jumpBuffer > 0f)
+        if (grounded)
             moveDirectionY = -1f;
 
         if (jumped && !controller.isGrounded)
