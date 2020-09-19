@@ -33,6 +33,11 @@ public class Player : MonoBehaviour
         UseAction.action.Enable();
     }
 
+    private void OnDestroy()
+    {
+        UseAction.action.started -= OnUse;
+    }
+
     void ResetPosition()
     {
         Controller.RotateCamera((Vector2)Checkpoint.eulerAngles);
