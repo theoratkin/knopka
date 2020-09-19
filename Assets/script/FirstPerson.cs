@@ -30,6 +30,8 @@ public class FirstPerson : MonoBehaviour
     public float Gravity = .5f;
     [Range(1f, 100f)]
     public float JumpForce = 10f;
+    [Range(0f, 1f)]
+    public float JumpBuffer = 0f;
 
     [Range(1f, 100f)]
     public float Mass = 10f;
@@ -48,6 +50,8 @@ public class FirstPerson : MonoBehaviour
     bool active = true;
     bool isGroundedPrev;
     bool jumpStartedPrev;
+
+    float jumpBuffer = 0f;
 
     Transform activePlatform;
     Vector3 externalMovement = Vector3.zero;
@@ -132,18 +136,30 @@ public class FirstPerson : MonoBehaviour
         moveDirection = Head.transform.forward * delta.y + Head.transform.right * delta.x;
 
         bool jumped = Jumped();
+        bool grounded = controller.isGrounded && !isGroundedPrev;
+        isGroundedPrev = controller.isGrounded;
 
-        if (jumped && controller.isGrounded)
+        if (grounded && jumpBuffer > 0f)
+            moveDirectionY = -1f;
+
+        if (jumped && !controller.isGrounded)
+            jumpBuffer = JumpBuffer;
+
+        if ((jumped || jumpBuffer > 0f) && controller.isGrounded)
+        {
             moveDirection.y = JumpForce;
+            jumpBuffer = 0f;
+        }
         else
+        {
             moveDirection.y = moveDirectionY;
+        }
+
+        if (jumpBuffer > 0f)
+            jumpBuffer -= Time.deltaTime;
 
         if (!controller.isGrounded)
             moveDirection.y -= Gravity * Time.deltaTime;
-
-        if (controller.isGrounded && !isGroundedPrev)
-            moveDirection.y = -1f;
-        isGroundedPrev = controller.isGrounded;
 
         Vector3 extrn = Vector3.zero;
         extrn = GetExternalMovement(jumped);
