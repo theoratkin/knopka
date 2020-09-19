@@ -169,6 +169,11 @@ public class Game : MonoBehaviour
         };
     }
 
+    private void OnDestroy()
+    {
+        PauseAction.action.started -= OnPause;
+    }
+
     void Ending(int num, string text)
     {
         pause = true;
