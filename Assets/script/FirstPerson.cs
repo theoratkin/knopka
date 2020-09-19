@@ -46,6 +46,7 @@ public class FirstPerson : MonoBehaviour
     Vector3 moveDirection;
 
     bool active = true;
+    bool isGroundedPrev;
     bool jumpStartedPrev;
 
     Transform activePlatform;
@@ -101,6 +102,7 @@ public class FirstPerson : MonoBehaviour
         Active = true;
 
         controller = GetComponent<CharacterController>();
+        isGroundedPrev = controller.isGrounded;
     }
 
     #endregion
@@ -138,6 +140,10 @@ public class FirstPerson : MonoBehaviour
 
         if (!controller.isGrounded)
             moveDirection.y -= Gravity * Time.deltaTime;
+
+        if (controller.isGrounded && !isGroundedPrev)
+            moveDirection.y = -1f;
+        isGroundedPrev = controller.isGrounded;
 
         Vector3 extrn = Vector3.zero;
         extrn = GetExternalMovement(jumped);
