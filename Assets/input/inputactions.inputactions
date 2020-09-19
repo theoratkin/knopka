@@ -1,5 +1,5 @@
 {
-    "name": "player",
+    "name": "inputactions",
     "maps": [
         {
             "name": "Player",
@@ -241,6 +241,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88ab8bb4-ca70-453a-8b5f-e3a26e449fe6",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
