@@ -7,8 +7,8 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class UI : MonoBehaviour
 {
-    private const float DefaultSensitivity = 3f;
-    private const float DefaultWebSensitivity = 2f;
+    private const float DefaultSensitivity = 8f;
+    private const float DefaultWebSensitivity = 4f;
 
     public bool Vsync { get; private set; }
 
@@ -183,6 +183,7 @@ public class UI : MonoBehaviour
     void SetSensitivity(float newVal)
     {
         Game.game.player.Controller.MouseSensitivity = newVal;
+        settings.Find("sensitivity").GetComponent<Slider>().SetValueWithoutNotify(newVal);
         settings.Find("sensitivity_val").GetComponent<Text>().text = newVal.ToString("0.0");
         sensitivity = newVal;
     }
