@@ -92,6 +92,7 @@ public class FirstPerson : MonoBehaviour
             }
 
             Cursor.lockState = value ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !value;
         }
     }
 
