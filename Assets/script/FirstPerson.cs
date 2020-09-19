@@ -249,7 +249,7 @@ public class FirstPerson : MonoBehaviour
         {
             Vector3 newGlobalPlatformPoint = activePlatform.TransformPoint(activeLocalPlatformPoint);
             externalMovement = newGlobalPlatformPoint - activeGlobalPlatformPoint;
-            if (externalMovement.magnitude > 0.01f)
+            if (externalMovement.magnitude > 0.001f)
             {
                 extrn = externalMovement;
                 Physics.SyncTransforms();
@@ -269,7 +269,7 @@ public class FirstPerson : MonoBehaviour
         }
         else
         {
-            if (externalMovement.magnitude > 0.01f)
+            if (externalMovement.magnitude > 0.001f)
             {
                 externalMovement = Vector3.Lerp(externalMovement, Vector3.zero, Time.deltaTime);
                 extrn = externalMovement;
