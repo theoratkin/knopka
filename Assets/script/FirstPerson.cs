@@ -33,9 +33,6 @@ public class FirstPerson : MonoBehaviour
     [Range(0f, 1f)]
     public float JumpBuffer = 0f;
 
-    [Range(1f, 100f)]
-    public float Mass = 10f;
-
     public string PlatformTag = "Platform";
 
     #endregion
