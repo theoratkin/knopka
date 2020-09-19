@@ -115,7 +115,10 @@ public class Game : MonoBehaviour
                     player.Checkpoint = transform.Find("island_1/checkpoint");
 
                 Transform platform = transform.Find("island_2_platforms/platform_05");
-                Move(platform, 1f, Vector3.forward * 303.2f * platformDirection);
+                platform.GetComponent<Collider>().enabled = false;
+                Move(platform, 1f, Vector3.forward * 303.2f * platformDirection, delegate() {
+                    platform.GetComponent<Collider>().enabled = true;
+                });
                 platform.GetComponent<AudioSource>().Play();
                 platformDirection = -platformDirection;
             }
@@ -186,8 +189,8 @@ public class Game : MonoBehaviour
 
     void PlayerPause(bool state)
     {
-        player.Controller.SetActive(!state);
-        player.SetCrosshairActive(!state);
+        player.Controller.Active = !state;
+        player.Controller.CrosshairActive = !state;
         //player.GetComponent<Rigidbody>().isKinematic = state;
     }
 
@@ -253,12 +256,12 @@ public class Game : MonoBehaviour
         Move(island, 1f, Vector3.back * 50f);
     }
 
-    void Move(Transform obj, float time, Vector3 distance)
+    void Move(Transform obj, float time, Vector3 distance, AnimationHelper.WhenDoneFunction onEnd = null)
     {
         Vector3 initPos = obj.position;
         StartCoroutine(AnimationHelper.RunAnimation(time, delegate(float timePerc, float secondsPassed) {
             obj.position = initPos + distance * timePerc;
-        }, AnimationHelper.EaseOut, AnimationHelper.SineFunction));
+        }, AnimationHelper.EaseOut, AnimationHelper.SineFunction, onEnd));
     }
 
     void MoveAt(Transform obj, float time, Vector3 position)
