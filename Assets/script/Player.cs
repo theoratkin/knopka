@@ -33,11 +33,6 @@ public class Player : MonoBehaviour
         UseAction.action.Enable();
     }
 
-    public void SetCrosshairActive(bool state)
-    {
-        Controller.SetCrosshairActive(state);
-    }
-
     void ResetPosition()
     {
         Controller.RotateCamera((Vector2)Checkpoint.eulerAngles);
