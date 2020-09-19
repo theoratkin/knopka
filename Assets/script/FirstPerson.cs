@@ -13,26 +13,31 @@ public class FirstPerson : MonoBehaviour
 {
     #region Inspector
 
+    [Header("Input")]
     public InputActionReference LookAction;
     public InputActionReference MoveAction;
     public InputActionReference JumpAction;
 
+    [Header("Objects")]
     public Transform Head;
     public Camera Camera;
     public GameObject crosshair;
 
-    [Range(1f, 100f)]
-    public float MovementSpeed = .5f;
+    [Header("Mouse")]
     [Range(1f, 20f)]
-    public float MouseSensitivity = .5f;
+    public float MouseSensitivity = 3f;
 
+    [Header("Movement")]
     [Range(1f, 100f)]
-    public float Gravity = .5f;
+    public float MovementSpeed = 10f;
     [Range(1f, 100f)]
-    public float JumpForce = 10f;
+    public float Gravity = 20f;
+
+    [Header("Jumping")]
+    [Range(1f, 100f)]
+    public float JumpForce = 8f;
     [Range(0f, 1f)]
-    public float JumpBuffer = 0f;
-
+    public float JumpBuffer = 0.3f;
     public string PlatformTag = "Platform";
 
     #endregion

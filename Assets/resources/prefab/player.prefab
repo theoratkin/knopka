@@ -82,11 +82,12 @@ MonoBehaviour:
   Head: {fileID: 141405919711033157}
   Camera: {fileID: 141405920059175545}
   crosshair: {fileID: 4341410162380372742}
-  MovementSpeed: 10
   MouseSensitivity: 3
+  MovementSpeed: 10
   Gravity: 20
-  JumpForce: 30
-  Mass: 40
+  JumpForce: 8
+  JumpBuffer: 0.3
+  PlatformTag: Platform
 --- !u!1 &141405919711033156
 GameObject:
   m_ObjectHideFlags: 0
