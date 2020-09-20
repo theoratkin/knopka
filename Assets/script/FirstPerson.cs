@@ -39,7 +39,7 @@ public class FirstPerson : MonoBehaviour
     [Range(0f, 1f)]
     public float JumpBuffer = 0.3f;
     [Range(0f, 1f)]
-    public float CyoteTime = 0.2f;
+    public float CoyoteTime = 0.2f;
     public string PlatformTag = "Platform";
 
     #endregion
@@ -56,7 +56,7 @@ public class FirstPerson : MonoBehaviour
     bool jumpStartedPrev;
 
     float jumpBuffer = 0f;
-    float cyoteTime = 0f;
+    float coyoteTime = 0f;
 
     Transform activePlatform;
     Vector3 externalMovement = Vector3.zero;
@@ -149,12 +149,12 @@ public class FirstPerson : MonoBehaviour
         if (grounded)
             moveDirectionY = -1f;
         if (ungrounded)
-            cyoteTime = CyoteTime;
+            coyoteTime = CoyoteTime;
 
         if (jumped && !controller.isGrounded)
             jumpBuffer = JumpBuffer;
 
-        if ((jumped || jumpBuffer > 0f) && (controller.isGrounded || cyoteTime > 0f))
+        if ((jumped || jumpBuffer > 0f) && (controller.isGrounded || coyoteTime > 0f))
         {
             moveDirection.y = JumpForce;
             jumpBuffer = 0f;
@@ -166,8 +166,8 @@ public class FirstPerson : MonoBehaviour
 
         if (jumpBuffer > 0f)
             jumpBuffer -= Time.deltaTime;
-        if (cyoteTime > 0f)
-            cyoteTime -= Time.deltaTime;
+        if (coyoteTime > 0f)
+            coyoteTime -= Time.deltaTime;
 
         if (!controller.isGrounded)
             moveDirection.y -= Gravity * Time.deltaTime;
