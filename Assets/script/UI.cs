@@ -135,6 +135,13 @@ public class UI : MonoBehaviour
 
         if (Game.game)
             UpdateSettings();
+
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            main.Find("exit").gameObject.SetActive(false);
+            pause.Find("exit").gameObject.SetActive(false);
+            ending.Find("exit").gameObject.SetActive(false);
+        }
     }
 
     public void ReplaceMainMenuWithPauseMenu()
