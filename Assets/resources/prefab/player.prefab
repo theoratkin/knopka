@@ -82,7 +82,7 @@ MonoBehaviour:
   Head: {fileID: 141405919711033157}
   Camera: {fileID: 141405920059175545}
   crosshair: {fileID: 4341410162380372742}
-  MouseSensitivity: 6
+  MouseSensitivity: 10
   MovementSpeed: 10
   Gravity: 20
   JumpForce: 8

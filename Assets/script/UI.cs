@@ -7,8 +7,8 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class UI : MonoBehaviour
 {
-    private const float DefaultSensitivity = 8f;
-    private const float DefaultWebSensitivity = 4f;
+    private const float DefaultSensitivity = 10f;
+    private const float DefaultWebSensitivity = 10f;
 
     public bool Vsync { get; private set; }
 
