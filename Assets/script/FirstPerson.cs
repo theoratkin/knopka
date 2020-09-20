@@ -24,8 +24,8 @@ public class FirstPerson : MonoBehaviour
     public GameObject crosshair;
 
     [Header("Mouse")]
-    [Range(1f, 20f)]
-    public float MouseSensitivity = 3f;
+    [Range(0.1f, 20f)]
+    public float MouseSensitivity = 10f;
 
     [Header("Movement")]
     [Range(1f, 100f)]
@@ -204,7 +204,7 @@ public class FirstPerson : MonoBehaviour
 
     void OnLook()
     {
-        Vector2 delta = LookAction.action.ReadValue<Vector2>() * MouseSensitivity * Time.deltaTime * 10f;
+        Vector2 delta = LookAction.action.ReadValue<Vector2>() * (MouseSensitivity / 75f);
         Head.transform.localEulerAngles += new Vector3(0f, delta.x, 0f);
 
         float angle = Camera.transform.localEulerAngles.x;
