@@ -5,8 +5,6 @@ Jam](https://itch.io/jam/unexpectedjam).
 
 ## Third party assets
 
-- [First person controller](https://assetstore.unity.com/packages/tools/input-management/first-person-all-in-one-135316) by Aedan Graves
-
 - [Font "Montserrat"](https://fonts.google.com/specimen/Montserrat) by Julieta
 Ulanovsky, Sol Matas, Juan Pablo del Peral, Jacques Le Bailly
 
