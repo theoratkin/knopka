@@ -7,6 +7,10 @@ Files: Assets/script/*
 Copyright: Theogen Ratkin <feogenratkin@gmail.com>
 License: GPL-3+
 
+Files: Assets/script/AnimationHelper.cs
+Copyright: Theogen Ratkin <feogenratkin@gmail.com>
+License: MIT
+
 Files: Assets/resources/prefab/*
 Copyright: Theogen Ratkin <feogenratkin@gmail.com>
 License: CC-BY-4.0
